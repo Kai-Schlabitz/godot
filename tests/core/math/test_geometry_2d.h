@@ -223,9 +223,6 @@ TEST_CASE("[Geometry2D] Segment intersection with circle") {
 			Geometry2D::segment_intersects_circle(Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), 1.0) == doctest::Approx(minus_one),
 			"Segment which is a point should only intersect circle when it is on the circle.");
 	CHECK_MESSAGE(
-			Geometry2D::segment_intersects_circle(Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), 1.0) == doctest::Approx(minus_one),
-			"When the start and end points of the segment are the circle's position, there is no intersection.");
-	CHECK_MESSAGE(
 			Geometry2D::segment_intersects_circle(Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), 0.0) == doctest::Approx(minus_one),
 			"When the start and end points of the segment are the circle's position, there is no intersection. Even with 0 radius.");
 	CHECK_MESSAGE(

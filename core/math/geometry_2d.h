@@ -215,6 +215,10 @@ public:
 	}
 
 	static real_t segment_intersects_circle(const Vector2 &p_from, const Vector2 &p_to, const Vector2 &p_circle_pos, real_t p_circle_radius) {
+		if (Math::is_zero_approx(p_circle_radius)) {
+			return -1;
+		}
+		
 		Vector2 line_vec = p_to - p_from;
 		Vector2 vec_to_line = p_from - p_circle_pos;
 
@@ -224,6 +228,10 @@ public:
 		a = line_vec.dot(line_vec);
 		b = 2 * vec_to_line.dot(line_vec);
 		c = vec_to_line.dot(vec_to_line) - p_circle_radius * p_circle_radius;
+
+		if (Math::is_zero_approx(a)) {
+			return Math::is_zero_approx(c) ? 0 : -1;
+		}
 
 		// Solve for t.
 		real_t sqrtterm = b * b - 4 * a * c;

@@ -209,6 +209,31 @@ TEST_CASE("[Geometry2D] Segment intersection with circle") {
 	CHECK_MESSAGE(
 			Geometry2D::segment_intersects_circle(Vector2(3, 0), Vector2(2, 0), Vector2(0, 0), 1.0) == doctest::Approx(minus_one),
 			"Segment completely outside the circle should not intersect it");
+
+	CHECK_MESSAGE(
+			Geometry2D::segment_intersects_circle(Vector2(0, 0), Vector2(1, 0), Vector2(0, 0), 0.0) == doctest::Approx(minus_one),
+			"Segment should not intersect circle with radius 0.");
+	CHECK_MESSAGE(
+			Geometry2D::segment_intersects_circle(Vector2(1, 0), Vector2(2, 0), Vector2(0, 0), 0.0) == doctest::Approx(minus_one),
+			"Segment should not intersect circle with radius 0.");
+	CHECK_MESSAGE(
+			Geometry2D::segment_intersects_circle(Vector2(1, 0), Vector2(1, 0), Vector2(0, 0), 1.0) == doctest::Approx(zero),
+			"Segment which is a point should be able to intersect circle.");
+	CHECK_MESSAGE(
+			Geometry2D::segment_intersects_circle(Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), 1.0) == doctest::Approx(minus_one),
+			"Segment which is a point should only intersect circle when it is on the circle.");
+	CHECK_MESSAGE(
+			Geometry2D::segment_intersects_circle(Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), 1.0) == doctest::Approx(minus_one),
+			"When the start and end points of the segment are the circle's position, there is no intersection.");
+	CHECK_MESSAGE(
+			Geometry2D::segment_intersects_circle(Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), 0.0) == doctest::Approx(minus_one),
+			"When the start and end points of the segment are the circle's position, there is no intersection. Even with 0 radius.");
+	CHECK_MESSAGE(
+			Geometry2D::segment_intersects_circle(Vector2(0, 0), Vector2(4, 0), Vector2(0, 0), -1.0) == doctest::Approx(one_quarter),
+			"Segment from inside to outside of circle should intersect it, even if the radius is negative.");
+	CHECK_MESSAGE(
+			Geometry2D::segment_intersects_circle(Vector2(2, 0), Vector2(3, 0), Vector2(0, 0), -1.0) == doctest::Approx(minus_one),
+			"Segment completely outside the circle should not intersect it, even with negative radius.");
 }
 
 TEST_CASE("[Geometry2D] Segment intersection with polygon") {
